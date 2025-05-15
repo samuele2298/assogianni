@@ -109,6 +109,68 @@
     background: url(../img/bg-header.png) left top no-repeat;
 }
 
+@media (max-width: 768px) {
+    #home {
+        background: url(../img/main-1.png) center top no-repeat;
+        background-size: cover; /* ✅ Adatta l’immagine */
+        background-color: #f8f9fa; /* ✅ Colore di fallback */
+        margin-bottom: 2rem;
+        padding-top: 50px; /* ✅ Spazio per far vedere l'immagine sopra al contenuto */
+    }
+
+    #home .row {
+        flex-direction: column-reverse;
+    }
+
+
+    #home img.img-fluid {
+        max-width: 100%;
+        display: none;
+        margin: 0rem auto 0 auto; /* ✅ Aggiunto margine sopra, tolto sotto */
+    }
+
+    #home h1.display-3 {
+        font-size: 2.5rem;
+    }
+
+    #home h3,
+    #home h2 {
+        font-size: 1.2rem;
+    }
+
+    #home .tee {
+        margin-top: 8rem !important;  /* aumenta e forza il margine */
+        padding-top: 1rem;            /* aggiunge spazio interno se serve */
+    }
+
+    #home .btn-play {
+        margin: 0 auto;
+    }
+
+    #home .btn-warning.py-3.px-4 {
+        padding: 0.75rem 1.5rem;
+    }
+
+    #home h5.ms-4.mb-0.d-none.d-sm-block {
+        display: none !important;
+    }
+
+    /* #home .btn-warning {
+        background-color: #ffffff; 
+        color: #ffc107  !important;   
+    }
+
+    #home .btn-warning i {
+        color: #ffc107 !important;
+    }
+
+
+    #home h5.ms-4.mb-0.d-none.d-sm-block {
+        color: #ffc107 !important;
+    } */
+}
+
+
 .typed-cursor {
     font-size: 30px;
     color: var(--dark);
