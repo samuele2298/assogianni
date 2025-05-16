@@ -35,7 +35,7 @@
 <body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="51">
     <!-- Spinner Start -->
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <div class="spinner-border" style="width: 3rem; height: 3rem; color: #E97451;" role="status">
             <span class="sr-only">Loading...</span>
         </div>
     </div>
@@ -43,18 +43,16 @@
 
 
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light fixed-top shadow-lg py-lg-0 px-4 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-        <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-lg py-lg-0 px-4 px-lg-5 wow fadeIn" data-wow-delay="0.1s" style="background-color: white; color: white;">
         <a href="index.html" class="navbar-brand d-block d-lg-none">
-            <h1 class="text-black fw-bold m-0">Asso Gianni</h1>
+            <img src="img/favicon.ico" alt="Logo" style="height: 40px;">
         </a>
         <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-between py-4 py-lg-0" id="navbarCollapse">
-            <link rel="icon" type="image/x-icon" href="favicon.ico">
             <a href="index.html" class="navbar-brand py-3 px-4 mx-3 d-none d-lg-block">
-                <h1 class="text-black fw-bold m-0">Asso Gianni</h1>
+                <img src="img/favicon.ico" alt="Logo" style="height: 40px;">
             </a>
             <div class="navbar-nav ms-auto py-0">
                 <a href="#about" class="nav-item nav-link">Info</a>
@@ -71,18 +69,24 @@
     <div class="container-fluid bg-light my-6 mt-0" id="home">
         <div class="container">
             <div class="row g-5 align-items-center">
-                <div class="tee col-lg-6 py-6 pb-0 pt-lg-0">
-                    <h3 class=" mb-1">Sono</h3>
-                    <h1 class="display-3 text-black mb-3">Asso Gianni</h1>
-                    <h2 class="typed-text-output d-inline"></h2>
-                    <div class="typed-text d-none">Mago di intrattenimento</div>
+                <div class="tee col-lg-6 py-6 pb-0 pt-lg-0 text-black">
+                    <h3 class="mb-1 text-black mobile-white-bg-text">Sono</h3>
+                    <h1 class="display-3 text-black mb-3 mobile-white-bg-text">Asso Gianni</h1>
+                    <h2 class="typed-text-output text-black d-inline mobile-white-bg-text"></h2>
+                    <div class="typed-text text-black mobile-white-bg-text d-none">Mago di intrattenimento</div>
                     <div class="d-flex pt-2 mt-3">
-                        <a class="btn btn-square btn-warning me-2" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-warning me-2" href=""><i class="fab fa-instagram"></i></a>
-                        <a class="btn btn-square btn-warning me-2" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="social btn btn-square me-2" href="">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="social btn btn-square me-2" href="">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a class="social btn btn-square me-2" href="">
+                            <i class="fab fa-youtube"></i>
+                        </a>
                     </div>
                     <div class="d-flex align-items-center pt-5 mb-3">
-                        <a href="#contacts" class="btn btn-warning py-3 px-4 me-5">Prenota una serata</a>
+                        <a href="#contact" class="btn btn-burntorange py-3 px-4 me-5">Prenota una serata</a>
                         <button type="button" class="btn-play" data-bs-toggle="modal"
                             data-src="https://www.youtube.com/embed/HYNf6aXlkn4" data-bs-target="#videoModal">
                             <span></span>
@@ -91,7 +95,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <img class="img-fluid" src="img/main-1.png" alt="">
+                    <img class="img-fluid" src="img/main-2.png" alt="">
                 </div>
             </div>
         </div>
@@ -133,10 +137,10 @@
                         <h3 class="lh-base mb-0">di spettacoli dal vivo pieni di magia, stupore e risate indimenticabili</h3>
                     </div>
                     <p class="mb-4">Da oltre dieci anni porto magia e divertimento in ogni tipo di evento: feste di compleanno, lauree, matrimoni, cene aziendali, serate nei locali e ristoranti. Ogni spettacolo è unico, coinvolgente e pensato per lasciare il pubblico a bocca aperta!</p>
-                    <p class="mb-3"><i class="far fa-check-circle text-warning me-3"></i>Spettacoli personalizzati per ogni occasione</p>
-                    <p class="mb-3"><i class="far fa-check-circle text-warning me-3"></i>Coinvolgimento del pubblico e momenti indimenticabili</p>
-                    <p class="mb-3"><i class="far fa-check-circle text-warning me-3"></i>Disponibile per eventi privati, locali e feste aziendali</p>
-                    <a class="btn btn-warning py-3 px-5 mt-3" href="">Scopri di più</a>
+                    <p class="mb-3"><i class="far fa-check-circle me-3" style="color: #E97451;"></i>Spettacoli personalizzati per ogni occasione</p>
+                    <p class="mb-3"><i class="far fa-check-circle me-3" style="color:  #E97451;"></i>Coinvolgimento del pubblico e momenti indimenticabili</p>
+                    <p class="mb-3"><i class="far fa-check-circle me-3" style="color: #E97451;"></i>Disponibile per eventi privati, locali e feste aziendali</p>
+                    <a class="btn py-3 px-5 mt-3" href="#contact" style="background-color: #E97451; color: white;">Scopri di più</a>
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="row g-3 mb-4">
@@ -149,13 +153,13 @@
                     </div>
                     <div class="d-flex align-items-center mb-3">
                         <h5 class="border-end pe-3 me-3 mb-0">Clienti Soddisfatti</h5>
-                        <h2 class="text-warning fw-bold mb-0" data-toggle="counter-up">54</h2>
+                        <h2 class="fw-bold mb-0" data-toggle="counter-up" style="color:  #E97451;">54</h2>
                     </div>
                     <p class="mb-4">Ogni spettacolo è studiato per sorprendere e divertire: 54 clienti felici sono la prova della passione e professionalità che porto in ogni esibizione!</p>
                     
                     <div class="d-flex align-items-center mb-3">
                         <h5 class="border-end pe-3 me-3 mb-0">Eventi Organizzati</h5>
-                        <h2 class="text-warning fw-bold mb-0" data-toggle="counter-up">324</h2>
+                        <h2 class="fw-bold mb-0" data-toggle="counter-up" style="color:  #E97451;">324</h2>
                     </div>
                     <p class="mb-0">Dalle feste di compleanno alle serate nei ristoranti, ho portato la magia in oltre 300 eventi. Ogni occasione è stata un momento speciale pieno di emozioni e sorrisi.</p>                    
                 </div>
@@ -504,20 +508,19 @@
             <div class="row justify-content-center">
                 <div class="col-lg-3 d-none d-lg-block">
                     <div class="testimonial-left h-100">
-                        <img class="img-fluid wow fadeIn" data-wow-delay="0.1s" src="img/testimonial-1.jpg" alt="">
-                        <img class="img-fluid wow fadeIn" data-wow-delay="0.3s" src="img/testimonial-2.jpg" alt="">
-                        <img class="img-fluid wow fadeIn" data-wow-delay="0.5s" src="img/testimonial-3.jpg" alt="">
-                        <img class="img-fluid wow fadeIn" data-wow-delay="0.7s" src="img/testimonial-2.jpg" alt="">
-                        <img class="img-fluid wow fadeIn" data-wow-delay="0.9s" src="img/testimonial-2.jpg" alt="">
+                        <img class="img-fluid wow fadeIn" style="border-color: #E97451;" src="img/frank.jpg" alt="">
+                        <img class="img-fluid wow fadeIn" style="border-color: #E97451;" data-wow-delay="0.3s" src="img/sam.jpg" alt="">
+                        <img class="img-fluid wow fadeIn" style="border-color: #E97451;" data-wow-delay="0.5s" src="img/manuel.jpg" alt="">
+                        <img class="img-fluid wow fadeIn" style="border-color: #E97451;" data-wow-delay="0.7s" src="img/rube.jpg" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="owl-carousel testimonial-carousel">
                         <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle border border-secondary p-2 mx-auto" src="img/testimonial-1.jpg" alt="">
+                                <img class="img-fluid rounded-circle border border-secondary p-2 mx-auto" src="img/rube.jpg" alt="">
                                 <div class="testimonial-icon">
-                                    <i class="fa fa-quote-left text-primary"></i>
+                                    <i class="fa fa-quote-left" style="color: #E97451;"></i>
                                 </div>
                             </div>
                             <p class="fs-5 fst-italic">GIA LO SAI BEL! PS non chiedetgli le barzellette vi prego!
@@ -528,9 +531,9 @@
                         </div>
                         <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle border border-secondary p-2 mx-auto" src="img/testimonial-2.jpg" alt="">
+                                <img class="img-fluid rounded-circle border border-secondary p-2 mx-auto"  src="img/sam.jpg" alt="">
                                 <div class="testimonial-icon">
-                                    <i class="fa fa-quote-left text-primary"></i>
+                                    <i class="fa fa-quote-left" style="color: #E97451;"></i>
                                 </div>
                             </div>
                             <p class="fs-5 fst-italic">Sarà pure bravo a fare le magie ma a fifa lo batto..</p>
@@ -539,10 +542,10 @@
                             <span>Proprietario Bitcoin&Scam</span>
                         </div>
                         <div class="testimonial-item text-center">
-                            <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle border border-secondary p-2 mx-auto" src="img/testimonial-3.jpg" alt="">
+                            <div class="position-relative mb-5" >
+                                <img class="img-fluid rounded-circle border border-secondary p-2 mx-auto"  src="img/frank.jpg" alt="">
                                 <div class="testimonial-icon">
-                                    <i class="fa fa-quote-left text-primary"></i>
+                                    <i class="fa fa-quote-left" style="color: #E97451;"></i>
                                 </div>
                             </div>
                             <p class="fs-5 fst-italic">Dice ancora che mi ha stracciato a Mariokart, non è vero! Ho vinto io, giuro!</p>
@@ -552,9 +555,9 @@
                         </div>
                         <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle border border-secondary p-2 mx-auto" src="img/testimonial-1.jpg" alt="">
+                                <img class="img-fluid rounded-circle border border-secondary p-2 mx-auto"  src="img/sam.jpg" alt="">
                                 <div class="testimonial-icon">
-                                    <i class="fa fa-quote-left text-primary"></i>
+                                    <i class="fa fa-quote-left" style="color: #E97451;"></i>
                                 </div>
                             </div>
                             <p class="fs-5 fst-italic">Non dategli del Sale grosso!</p>
@@ -564,9 +567,9 @@
                         </div>
                         <div class="testimonial-item text-center">
                             <div class="position-relative mb-5">
-                                <img class="img-fluid rounded-circle border border-secondary p-2 mx-auto" src="img/testimonial-3.jpg" alt="">
+                                <img class="img-fluid rounded-circle border border-secondary p-2 mx-auto"  src="img/manuel.jpg" alt="">
                                 <div class="testimonial-icon">
-                                    <i class="fa fa-quote-left text-primary"></i>
+                                    <i class="fa fa-quote-left" style="color: #E97451;"></i>
                                 </div>
                             </div>
                             <p class="fs-5 fst-italic">Stavate parlando di meeee?</p>
@@ -578,11 +581,10 @@
                 </div>
                 <div class="col-lg-3 d-none d-lg-block">
                     <div class="testimonial-right h-100">
-                        <img class="img-fluid wow fadeIn" data-wow-delay="0.1s" src="img/testimonial-1.jpg" alt="">
-                        <img class="img-fluid wow fadeIn" data-wow-delay="0.3s" src="img/testimonial-2.jpg" alt="">
-                        <img class="img-fluid wow fadeIn" data-wow-delay="0.5s" src="img/testimonial-3.jpg" alt="">
-                        <img class="img-fluid wow fadeIn" data-wow-delay="0.7s" src="img/testimonial-2.jpg" alt="">
-                        <img class="img-fluid wow fadeIn" data-wow-delay="0.9s" src="img/testimonial-2.jpg" alt="">
+                        <img class="img-fluid wow fadeIn" style="border-color: #E97451;" data-wow-delay="0.1s" src="img/sam.jpg" alt="">
+                        <img class="img-fluid wow fadeIn" style="border-color: #E97451;" data-wow-delay="0.3s" src="img/manuel.jpg" alt="">
+                        <img class="img-fluid wow fadeIn" style="border-color: #E97451;" data-wow-delay="0.5s" src="img/frank.jpg" alt="">
+                        <img class="img-fluid wow fadeIn" style="border-color: #E97451;" data-wow-delay="0.7s" src="img/rube.jpg" alt="">
                     </div>
                 </div>
             </div>
@@ -612,10 +614,10 @@
                     <hr class="w-100">
                     <p class="mb-2">Seguimi:</p>
                     <div class="d-flex pt-2">
-                        <a class="btn btn-square btn-warning me-2" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-square btn-warning me-2" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-square btn-warning me-2" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-square btn-warning me-2" href=""><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-square btn-warning me-2" href="" style="background-color: #E97451; color: white;"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square btn-warning me-2" href="" style="background-color: #E97451; color: white;"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square btn-warning me-2" href="" style="background-color: #E97451; color: white;"><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-square btn-warning me-2" href="" style="background-color: #E97451; color: white;"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-7 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
@@ -647,7 +649,7 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <button class="btn btn-warning py-3 px-5" type="submit">Invia</button>
+                                <button class="btn py-3 px-5" style="background-color: #E97451; color: white;" type="submit">Invia</button>
                             </div>
                         </div>
                     </form>
@@ -673,17 +675,17 @@
 
 
     <!-- Copyright Start -->
-    <div class="container-fluid bg-warning text-black py-4">
+    <div class="container-fluid text-white py-4" style="background-color: #E97451;">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom text-black" href="#">Asso Gianni</a>, All Right Reserved.
+                        &copy; <a class="border-bottom text-white" href="#">Asso Gianni</a>, All Right Reserved.
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. 
                         If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase 
                         the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                        Designed By <a class="border-bottom text-black" href="https://htmlcodex.com">HTML Codex</a>
+                        Designed By <a class="border-bottom text-white" href="https://htmlcodex.com">HTML Codex</a>
                     </div>
                 </div>
             </div>
@@ -693,7 +695,7 @@
 
 
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-warning btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <a href="#" class="btn btn-lg btn-lg-square back-to-top" style="background-color: #E97451; color: white;"><i class="bi bi-arrow-up"></i></a>
 
 
     <!-- JavaScript Libraries -->

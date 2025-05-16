@@ -18,10 +18,27 @@
 
     // Navbar on scrolling
     $(window).scroll(function () {
-        if ($(this).scrollTop() > 300) {
-            $('.navbar').fadeIn('slow').css('display', 'flex');
+        if ($(window).width() > 992) { // Solo per desktop
+            if ($(this).scrollTop() > 300) {
+                $('.navbar').fadeIn('slow').css('display', 'flex');
+            } else {
+                $('.navbar').fadeOut('slow').css('display', 'none');
+            }
         } else {
-            $('.navbar').fadeOut('slow').css('display', 'none');
+            $('.navbar').css({
+                'display': 'flex',
+                'position': 'fixed',
+                'top': '0',
+                'width': '100%',
+                'z-index': '1030'
+            });
+        }
+    });
+
+    // Chiude il menu mobile al clic su un link
+    $('.navbar-nav a').on('click', function () {
+        if ($('.navbar-toggler').is(':visible')) {
+            $('.navbar-collapse').collapse('hide');
         }
     });
 
