@@ -159,9 +159,8 @@
 
     function showSlide(idx) {
         const slideWidth = getSlideWidth();
-        for (const slide of slides) {
-            slide.style.transform = `translateX(-${idx * slideWidth}px)`;
-        }
+        carousel.style.transform = `translateX(-${idx * slideWidth}px)`;
+
     }
 
     prevBtn.addEventListener('click', () => {
