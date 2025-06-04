@@ -87,19 +87,21 @@
     }
 
 
-    // Modal Video
     var $videoSrc;
+
     $('.btn-play').click(function () {
         $videoSrc = $(this).data("src");
     });
-    console.log($videoSrc);
+    
     $('#videoModal').on('shown.bs.modal', function (e) {
-        $("#video").attr('src', $videoSrc + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0");
-    })
+        // Aggiungo autoplay e parametri YouTube
+        $("#video").attr('src', $videoSrc + "?autoplay=1&modestbranding=1&showinfo=0");
+    });
+    
     $('#videoModal').on('hide.bs.modal', function (e) {
-        $("#video").attr('src', $videoSrc);
-    })
-
+        // Rimuovo la src per fermare il video
+        $("#video").attr('src', '');
+    });
 
     // Facts counter
     $('[data-toggle="counter-up"]').counterUp({
@@ -144,8 +146,19 @@
     const nextBtn = document.querySelector('.carousel-control.next');
     let index = 0;
 
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isAndroid = /android/i.test(navigator.userAgent);
+
+    function getSlideWidth() {
+        if (isIOS) {
+            return carousel.offsetWidth; // più stabile su Safari iOS
+        } else {
+            return slides[0].getBoundingClientRect().width; // va bene su Android/Chrome
+        }
+    }
+
     function showSlide(idx) {
-        const slideWidth = slides[0].getBoundingClientRect().width;
+        const slideWidth = getSlideWidth();
         for (const slide of slides) {
             slide.style.transform = `translateX(-${idx * slideWidth}px)`;
         }

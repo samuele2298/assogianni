@@ -1,4 +1,9 @@
 /********** Template CSS **********/
+
+html, body {
+    overflow-x: hidden;
+}
+
 :root {
     --primary: #ccba53;
     --secondary: #ff48b97e;
@@ -86,6 +91,24 @@
     }
 }
 
+.img-desktop {
+    display: none;
+}
+
+.img-mobile {
+    display: block;
+}
+
+@media (min-width: 992px) {
+    .img-desktop {
+        display: block;
+    }
+
+    .img-mobile {
+        display: none;
+    }
+}
+
 .social {
     background-color: white;
     border: none;
@@ -165,7 +188,7 @@
         background-size: cover; /* ✅ Adatta l’immagine */
         background-color: #f8f9fa; /* ✅ Colore di fallback */
         margin-bottom: 2rem;
-        padding-top: 50px; /* ✅ Spazio per far vedere l'immagine sopra al contenuto */
+        padding-top: 100px; /* ✅ Spazio per far vedere l'immagine sopra al contenuto */
     }
 
     #home .row {
@@ -189,7 +212,8 @@
     }
 
     #home .tee {
-        margin-top: 8rem !important;  /* aumenta e forza il margine */
+        margin-top: 2rem !important;  /* aumenta e forza il margine */
+        margin-bottom: 2rem !important;  /* aumenta e forza il margine */
         padding-top: 1rem;            /* aggiunge spazio interno se serve */
     }
 
@@ -383,7 +407,7 @@
 
 .carousel-wrapper {
     display: flex;
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.3s ease-in-out;
     will-change: transform;
     aspect-ratio: 1 / 1;
     white-space: nowrap;
@@ -660,7 +684,7 @@
   
   /* Colonna immagine */
   .testimonial-image-side {
-    background-image: linear-gradient(rgba(1,0,68,0.1), rgba(1,0,68,0.1)), url('../img/6.jpg');
+    background-image: linear-gradient(rgba(1,0,68,0.1), rgba(1,0,68,0.1)), url('../img/1.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
