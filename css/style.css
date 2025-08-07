@@ -632,7 +632,7 @@ html, body {
   
 /* Colonna con immagine */
 .hero-image-side {
-    background-image: linear-gradient(rgba(1,0,68,0.1), rgba(1,0,68,0.1)), url('../img/15.jpg');
+    background-image: linear-gradient(rgba(1,0,68,0.1), rgba(1,0,68,0.1)), url('../img/16.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -688,7 +688,7 @@ html, body {
   
   /* Colonna immagine */
   .testimonial-image-side {
-    background-image: linear-gradient(rgba(1,0,68,0.1), rgba(1,0,68,0.1)), url('../img/1.jpg');
+    background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.1)), url('../img/14.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
