@@ -2,6 +2,7 @@
     "use strict";
 
     var HARDCODED_PASSWORD = "gianniasso";
+    var LOCAL_EVENTS_KEY = "events_local_fallback";
 
     var loginCard = document.getElementById("login-card");
     var panelCard = document.getElementById("panel-card");
@@ -24,6 +25,7 @@
 
     var password = "";
     var events = [];
+    var useLocalMode = false;
 
     function showLoginError(message) {
         loginError.textContent = message;
@@ -138,14 +140,53 @@
         });
     }
 
+    function saveLocalEvents() {
+        window.localStorage.setItem(LOCAL_EVENTS_KEY, JSON.stringify({ events: events }));
+    }
+
+    function readLocalEvents() {
+        var raw = window.localStorage.getItem(LOCAL_EVENTS_KEY);
+        if (!raw) {
+            return [];
+        }
+
+        try {
+            var parsed = JSON.parse(raw);
+            return Array.isArray(parsed.events) ? parsed.events : [];
+        } catch (error) {
+            return [];
+        }
+    }
+
     function loadEvents() {
         fetch("../api/events.php", { cache: "no-store" })
             .then(function (res) {
                 return res.json();
             })
             .then(function (payload) {
+                useLocalMode = false;
                 events = Array.isArray(payload.events) ? payload.events : [];
                 renderEvents();
+            })
+            .catch(function () {
+                useLocalMode = true;
+
+                fetch("../data/events.json", { cache: "no-store" })
+                    .then(function (res) {
+                        return res.json();
+                    })
+                    .then(function (payload) {
+                        var localEvents = readLocalEvents();
+                        var jsonEvents = Array.isArray(payload.events) ? payload.events : [];
+                        events = localEvents.length ? localEvents : jsonEvents;
+                        renderEvents();
+                        showPanelMessage("Modalita locale attiva: senza server PHP le modifiche restano solo su questo browser");
+                    })
+                    .catch(function () {
+                        events = readLocalEvents();
+                        renderEvents();
+                        showPanelMessage("Modalita locale attiva: senza server PHP le modifiche restano solo su questo browser");
+                    });
             });
     }
 
@@ -169,6 +210,13 @@
         var ids = events.map(function (item) {
             return item.id;
         });
+
+        if (useLocalMode) {
+            saveLocalEvents();
+            renderEvents();
+            showPanelMessage("Ordine aggiornato (locale)");
+            return;
+        }
 
         apiCall({ action: "reorder", ids: ids, password: password })
             .then(function (payload) {
@@ -218,6 +266,36 @@
             datetime: eventDatetimeInput.value
         };
 
+        if (useLocalMode) {
+            if (id) {
+                events = events.map(function (item) {
+                    if (item.id !== id) {
+                        return item;
+                    }
+
+                    return {
+                        id: item.id,
+                        title: payload.title,
+                        location: payload.location,
+                        datetime: new Date(payload.datetime).toISOString()
+                    };
+                });
+            } else {
+                events.push({
+                    id: "evt-local-" + Date.now(),
+                    title: payload.title,
+                    location: payload.location,
+                    datetime: new Date(payload.datetime).toISOString()
+                });
+            }
+
+            saveLocalEvents();
+            renderEvents();
+            resetForm();
+            showPanelMessage(id ? "Evento aggiornato (locale)" : "Evento aggiunto (locale)");
+            return;
+        }
+
         var request = id
             ? apiCall(Object.assign({ action: "update", id: id }, payload))
             : apiCall(Object.assign({ action: "create" }, payload));
@@ -266,6 +344,16 @@
         if (action === "delete") {
             var deleteId = button.getAttribute("data-id");
             if (!window.confirm("Vuoi eliminare questo evento?")) {
+                return;
+            }
+
+            if (useLocalMode) {
+                events = events.filter(function (item) {
+                    return item.id !== deleteId;
+                });
+                saveLocalEvents();
+                renderEvents();
+                showPanelMessage("Evento eliminato (locale)");
                 return;
             }
 

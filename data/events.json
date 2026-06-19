@@ -1,22 +1,22 @@
 {
-  "events": [
-    {
-      "id": "evt-1",
-      "title": "Sport Weekend San Benedetto",
-      "location": "San Benedetto - Centro Storico",
-      "datetime": "2026-06-27T19:00:00+02:00"
-    },
-    {
-      "id": "evt-2",
-      "title": "Notte Rosa Poggio Rusco",
-      "location": "Poggio Rusco - Piazza",
-      "datetime": "2026-07-04T20:00:00+02:00"
-    },
-    {
-      "id": "evt-3",
-      "title": "Dragonstock",
-      "location": "Dragoncello - Campo Sportivo",
-      "datetime": "2026-07-11T19:30:00+02:00"
-    }
-  ]
+    "events": [
+        {
+            "id": "evt-1",
+            "title": "Sport Weekend San Benedetto",
+            "location": "San Benedetto - Centro Storico",
+            "datetime": "2026-06-27T19:00:00+02:00"
+        },
+        {
+            "id": "evt-2",
+            "title": "Notte Rosa Poggio Rusco",
+            "location": "Poggio Rusco - Piazza",
+            "datetime": "2026-07-04T20:00:00+02:00"
+        },
+        {
+            "id": "evt-3",
+            "title": "Dragonstock",
+            "location": "Dragoncello - Campo Sportivo",
+            "datetime": "2026-07-11T19:30:00+02:00"
+        }
+    ]
 }

@@ -6,6 +6,13 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Admin Eventi | Asso Gianni</title>
 
+    <script>
+        // When opened as /admin (without trailing slash), relative assets resolve to root and 404.
+        if (window.location.pathname === "/admin") {
+            window.location.replace("/admin/" + window.location.search + window.location.hash);
+        }
+    </script>
+
     <link href="../img/favicon.ico" rel="icon">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -18,6 +25,7 @@
         <section id="login-card" class="admin-card mx-auto">
             <h1 class="h3 mb-3">Area Admin Eventi</h1>
             <p class="text-muted mb-4">Inserisci la password per gestire i prossimi eventi.</p>
+            <p class="text-muted small mb-3">Se apri i file con doppio click, funziona in modalita locale. Per avere URL /admin e salvataggio JSON reale serve avviare il sito con server PHP.</p>
 
             <form id="login-form" class="row g-3">
                 <div class="col-12">

@@ -1,6 +1,8 @@
 (function () {
     "use strict";
 
+    var LOCAL_EVENTS_KEY = "events_local_fallback";
+
     var listEl = document.getElementById("upcoming-events-list");
     var emptyEl = document.getElementById("upcoming-events-empty");
 
@@ -75,6 +77,20 @@
         return [];
     }
 
+    function readLocalFallback() {
+        try {
+            var raw = window.localStorage.getItem(LOCAL_EVENTS_KEY);
+            if (!raw) {
+                return [];
+            }
+
+            var parsed = JSON.parse(raw);
+            return normalizePayload(parsed);
+        } catch (error) {
+            return [];
+        }
+    }
+
     function fetchAndRender() {
         fetch("api/events.php", { cache: "no-store" })
             .then(function (res) {
@@ -84,7 +100,17 @@
                 render(normalizePayload(payload));
             })
             .catch(function () {
-                render([]);
+                // Fallback for static file usage (no PHP server).
+                fetch("data/events.json", { cache: "no-store" })
+                    .then(function (res) {
+                        return res.json();
+                    })
+                    .then(function (payload) {
+                        render(normalizePayload(payload));
+                    })
+                    .catch(function () {
+                        render(readLocalFallback());
+                    });
             });
     }
 
@@ -94,7 +120,14 @@
             return;
         }
 
-        var source = new EventSource("api/events-stream.php");
+        var source;
+
+        try {
+            source = new EventSource("api/events-stream.php");
+        } catch (error) {
+            setInterval(fetchAndRender, 15000);
+            return;
+        }
 
         source.addEventListener("events", function (event) {
             try {
@@ -107,7 +140,10 @@
 
         source.onerror = function () {
             source.close();
-            setTimeout(setupLiveUpdates, 3000);
+            setTimeout(function () {
+                fetchAndRender();
+                setupLiveUpdates();
+            }, 3000);
         };
     }
 
