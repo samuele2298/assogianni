@@ -463,6 +463,56 @@ html, body {
     right: 10px;
 }
 
+.events-live-badge {
+    display: inline-block;
+    background: rgba(233, 117, 81, 0.12);
+    color: #E97451;
+    border: 1px solid rgba(233, 117, 81, 0.3);
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.35rem 0.85rem;
+}
+
+.event-card {
+    height: 100%;
+    background: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    padding: 1.25rem;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+.event-date {
+    color: #E97451;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+}
+
+.event-title {
+    margin-bottom: 0.5rem;
+}
+
+.event-location {
+    color: #5f646b;
+    margin-bottom: 0;
+}
+
+.event-empty-state {
+    text-align: center;
+    padding: 1.4rem;
+    border-radius: 12px;
+    background: #fff7f3;
+    color: #9f563d;
+    border: 1px dashed rgba(233, 117, 81, 0.35);
+}
+
 @media (max-width: 768px) {
     .carousel-control {
         padding: 8px 12px;
