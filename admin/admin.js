@@ -154,6 +154,14 @@
             });
     }
 
+    function readGlobalFallback() {
+        if (window.__EVENTS_DATA__) {
+            return normalizeEvents(window.__EVENTS_DATA__);
+        }
+
+        return [];
+    }
+
     function loadInitialEvents() {
         fetch("../data/events.json", { cache: "no-store" })
             .then(function (res) {
@@ -164,9 +172,9 @@
                 renderEvents();
             })
             .catch(function () {
-                events = [];
+                events = readGlobalFallback();
                 renderEvents();
-                showPanelMessage("Impossibile leggere data/events.json");
+                showPanelMessage("Lettura da fallback statico (events-data.js)");
             });
     }
 

@@ -75,6 +75,14 @@
         return [];
     }
 
+    function readGlobalFallback() {
+        if (window.__EVENTS_DATA__) {
+            return normalizePayload(window.__EVENTS_DATA__);
+        }
+
+        return [];
+    }
+
     function fetchAndRender() {
         fetch("data/events.json", { cache: "no-store" })
             .then(function (res) {
@@ -84,7 +92,7 @@
                 render(normalizePayload(payload));
             })
             .catch(function () {
-                render([]);
+                render(readGlobalFallback());
             });
     }
 
