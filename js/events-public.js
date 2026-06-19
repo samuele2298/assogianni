@@ -1,8 +1,6 @@
 (function () {
     "use strict";
 
-    var LOCAL_EVENTS_KEY = "events_local_fallback";
-
     var listEl = document.getElementById("upcoming-events-list");
     var emptyEl = document.getElementById("upcoming-events-empty");
 
@@ -77,22 +75,8 @@
         return [];
     }
 
-    function readLocalFallback() {
-        try {
-            var raw = window.localStorage.getItem(LOCAL_EVENTS_KEY);
-            if (!raw) {
-                return [];
-            }
-
-            var parsed = JSON.parse(raw);
-            return normalizePayload(parsed);
-        } catch (error) {
-            return [];
-        }
-    }
-
     function fetchAndRender() {
-        fetch("api/events.php", { cache: "no-store" })
+        fetch("data/events.json", { cache: "no-store" })
             .then(function (res) {
                 return res.json();
             })
@@ -100,53 +84,9 @@
                 render(normalizePayload(payload));
             })
             .catch(function () {
-                // Fallback for static file usage (no PHP server).
-                fetch("data/events.json", { cache: "no-store" })
-                    .then(function (res) {
-                        return res.json();
-                    })
-                    .then(function (payload) {
-                        render(normalizePayload(payload));
-                    })
-                    .catch(function () {
-                        render(readLocalFallback());
-                    });
+                render([]);
             });
     }
 
-    function setupLiveUpdates() {
-        if (typeof window.EventSource === "undefined") {
-            setInterval(fetchAndRender, 15000);
-            return;
-        }
-
-        var source;
-
-        try {
-            source = new EventSource("api/events-stream.php");
-        } catch (error) {
-            setInterval(fetchAndRender, 15000);
-            return;
-        }
-
-        source.addEventListener("events", function (event) {
-            try {
-                var payload = JSON.parse(event.data);
-                render(normalizePayload(payload));
-            } catch (error) {
-                fetchAndRender();
-            }
-        });
-
-        source.onerror = function () {
-            source.close();
-            setTimeout(function () {
-                fetchAndRender();
-                setupLiveUpdates();
-            }, 3000);
-        };
-    }
-
     fetchAndRender();
-    setupLiveUpdates();
 })();

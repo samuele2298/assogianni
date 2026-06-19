@@ -1,16 +1,6 @@
 (function () {
     "use strict";
 
-    var HARDCODED_PASSWORD = "gianniasso";
-    var LOCAL_EVENTS_KEY = "events_local_fallback";
-
-    var loginCard = document.getElementById("login-card");
-    var panelCard = document.getElementById("panel-card");
-    var loginForm = document.getElementById("login-form");
-    var loginError = document.getElementById("login-error");
-    var passwordInput = document.getElementById("admin-password");
-    var logoutBtn = document.getElementById("logout-btn");
-
     var eventForm = document.getElementById("event-form");
     var eventIdInput = document.getElementById("event-id");
     var eventTitleInput = document.getElementById("event-title");
@@ -18,31 +8,21 @@
     var eventDatetimeInput = document.getElementById("event-datetime");
     var cancelEditBtn = document.getElementById("cancel-edit-btn");
     var saveBtn = document.getElementById("save-btn");
+    var downloadJsonBtn = document.getElementById("download-json-btn");
+    var uploadJsonInput = document.getElementById("upload-json-input");
 
     var tableBody = document.getElementById("events-table-body");
     var emptyText = document.getElementById("events-empty");
     var panelMessage = document.getElementById("panel-message");
 
-    var password = "";
     var events = [];
-    var useLocalMode = false;
-
-    function showLoginError(message) {
-        loginError.textContent = message;
-        loginError.classList.remove("d-none");
-    }
-
-    function clearLoginError() {
-        loginError.classList.add("d-none");
-        loginError.textContent = "";
-    }
 
     function showPanelMessage(message) {
         panelMessage.textContent = message;
         panelMessage.classList.remove("d-none");
         window.setTimeout(function () {
             panelMessage.classList.add("d-none");
-        }, 2200);
+        }, 2500);
     }
 
     function isoToInputValue(isoString) {
@@ -80,6 +60,10 @@
         eventDatetimeInput.value = "";
         saveBtn.textContent = "Aggiungi evento";
         cancelEditBtn.classList.add("d-none");
+    }
+
+    function toPayload() {
+        return { events: events };
     }
 
     function renderEvents() {
@@ -122,82 +106,6 @@
         });
     }
 
-    function apiCall(body) {
-        return fetch("../api/events.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(body)
-        }).then(function (res) {
-            return res.json().then(function (payload) {
-                if (!res.ok) {
-                    var message = payload && payload.error ? payload.error : "Errore API";
-                    throw new Error(message);
-                }
-                return payload;
-            });
-        });
-    }
-
-    function saveLocalEvents() {
-        window.localStorage.setItem(LOCAL_EVENTS_KEY, JSON.stringify({ events: events }));
-    }
-
-    function readLocalEvents() {
-        var raw = window.localStorage.getItem(LOCAL_EVENTS_KEY);
-        if (!raw) {
-            return [];
-        }
-
-        try {
-            var parsed = JSON.parse(raw);
-            return Array.isArray(parsed.events) ? parsed.events : [];
-        } catch (error) {
-            return [];
-        }
-    }
-
-    function loadEvents() {
-        fetch("../api/events.php", { cache: "no-store" })
-            .then(function (res) {
-                return res.json();
-            })
-            .then(function (payload) {
-                useLocalMode = false;
-                events = Array.isArray(payload.events) ? payload.events : [];
-                renderEvents();
-            })
-            .catch(function () {
-                useLocalMode = true;
-
-                fetch("../data/events.json", { cache: "no-store" })
-                    .then(function (res) {
-                        return res.json();
-                    })
-                    .then(function (payload) {
-                        var localEvents = readLocalEvents();
-                        var jsonEvents = Array.isArray(payload.events) ? payload.events : [];
-                        events = localEvents.length ? localEvents : jsonEvents;
-                        renderEvents();
-                        showPanelMessage("Modalita locale attiva: senza server PHP le modifiche restano solo su questo browser");
-                    })
-                    .catch(function () {
-                        events = readLocalEvents();
-                        renderEvents();
-                        showPanelMessage("Modalita locale attiva: senza server PHP le modifiche restano solo su questo browser");
-                    });
-            });
-    }
-
-    function setAuthenticated(newPassword) {
-        password = newPassword;
-        sessionStorage.setItem("events_admin_password", password);
-        loginCard.classList.add("d-none");
-        panelCard.classList.remove("d-none");
-        loadEvents();
-    }
-
     function moveEvent(currentIndex, nextIndex) {
         if (nextIndex < 0 || nextIndex >= events.length) {
             return;
@@ -206,115 +114,138 @@
         var temp = events[currentIndex];
         events[currentIndex] = events[nextIndex];
         events[nextIndex] = temp;
+        renderEvents();
+        showPanelMessage("Ordine aggiornato");
+    }
 
-        var ids = events.map(function (item) {
-            return item.id;
-        });
+    function downloadJson() {
+        var content = JSON.stringify(toPayload(), null, 4) + "\n";
+        var blob = new Blob([content], { type: "application/json;charset=utf-8" });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement("a");
 
-        if (useLocalMode) {
-            saveLocalEvents();
-            renderEvents();
-            showPanelMessage("Ordine aggiornato (locale)");
-            return;
+        link.href = url;
+        link.download = "events.json";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+    }
+
+    function normalizeEvents(input) {
+        if (!input || !Array.isArray(input.events)) {
+            return [];
         }
 
-        apiCall({ action: "reorder", ids: ids, password: password })
-            .then(function (payload) {
-                events = payload.events || [];
-                renderEvents();
-                showPanelMessage("Ordine aggiornato");
+        return input.events
+            .filter(function (item) {
+                return item && typeof item === "object";
             })
-            .catch(function (error) {
-                showPanelMessage(error.message);
-                loadEvents();
+            .map(function (item) {
+                return {
+                    id: String(item.id || ("evt-" + Date.now() + "-" + Math.random().toString(16).slice(2))),
+                    title: String(item.title || "").trim(),
+                    location: String(item.location || "").trim(),
+                    datetime: String(item.datetime || "")
+                };
+            })
+            .filter(function (item) {
+                return item.title && item.location && item.datetime;
             });
     }
 
-    loginForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        clearLoginError();
+    function loadInitialEvents() {
+        fetch("../data/events.json", { cache: "no-store" })
+            .then(function (res) {
+                return res.json();
+            })
+            .then(function (payload) {
+                events = normalizeEvents(payload);
+                renderEvents();
+            })
+            .catch(function () {
+                events = [];
+                renderEvents();
+                showPanelMessage("Impossibile leggere data/events.json");
+            });
+    }
 
-        var value = passwordInput.value.trim();
-        if (value !== HARDCODED_PASSWORD) {
-            showLoginError("Password errata");
+    eventForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        var id = eventIdInput.value;
+        var title = eventTitleInput.value.trim();
+        var location = eventLocationInput.value.trim();
+        var datetimeRaw = eventDatetimeInput.value;
+        var normalizedDatetime = new Date(datetimeRaw).toISOString();
+
+        if (!title || !location || !datetimeRaw || Number.isNaN(new Date(datetimeRaw).getTime())) {
+            showPanelMessage("Compila correttamente titolo, luogo e data/ora");
             return;
         }
 
-        setAuthenticated(value);
-    });
+        if (id) {
+            events = events.map(function (item) {
+                if (item.id !== id) {
+                    return item;
+                }
 
-    logoutBtn.addEventListener("click", function () {
-        sessionStorage.removeItem("events_admin_password");
-        password = "";
-        loginCard.classList.remove("d-none");
-        panelCard.classList.add("d-none");
-        passwordInput.value = "";
+                return {
+                    id: item.id,
+                    title: title,
+                    location: location,
+                    datetime: normalizedDatetime
+                };
+            });
+            showPanelMessage("Evento aggiornato");
+        } else {
+            events.push({
+                id: "evt-" + Date.now(),
+                title: title,
+                location: location,
+                datetime: normalizedDatetime
+            });
+            showPanelMessage("Evento aggiunto");
+        }
+
+        renderEvents();
+        resetForm();
     });
 
     cancelEditBtn.addEventListener("click", function () {
         resetForm();
     });
 
-    eventForm.addEventListener("submit", function (event) {
-        event.preventDefault();
+    downloadJsonBtn.addEventListener("click", function () {
+        downloadJson();
+        showPanelMessage("File events.json scaricato");
+    });
 
-        var id = eventIdInput.value;
-        var payload = {
-            password: password,
-            title: eventTitleInput.value.trim(),
-            location: eventLocationInput.value.trim(),
-            datetime: eventDatetimeInput.value
-        };
-
-        if (useLocalMode) {
-            if (id) {
-                events = events.map(function (item) {
-                    if (item.id !== id) {
-                        return item;
-                    }
-
-                    return {
-                        id: item.id,
-                        title: payload.title,
-                        location: payload.location,
-                        datetime: new Date(payload.datetime).toISOString()
-                    };
-                });
-            } else {
-                events.push({
-                    id: "evt-local-" + Date.now(),
-                    title: payload.title,
-                    location: payload.location,
-                    datetime: new Date(payload.datetime).toISOString()
-                });
-            }
-
-            saveLocalEvents();
-            renderEvents();
-            resetForm();
-            showPanelMessage(id ? "Evento aggiornato (locale)" : "Evento aggiunto (locale)");
+    uploadJsonInput.addEventListener("change", function () {
+        var file = uploadJsonInput.files && uploadJsonInput.files[0];
+        if (!file) {
             return;
         }
 
-        var request = id
-            ? apiCall(Object.assign({ action: "update", id: id }, payload))
-            : apiCall(Object.assign({ action: "create" }, payload));
-
-        request
-            .then(function (response) {
-                events = response.events || [];
+        var reader = new FileReader();
+        reader.onload = function () {
+            try {
+                var payload = JSON.parse(String(reader.result || "{}"));
+                var parsed = normalizeEvents(payload);
+                events = parsed;
                 renderEvents();
                 resetForm();
-                showPanelMessage(id ? "Evento aggiornato" : "Evento aggiunto");
-            })
-            .catch(function (error) {
-                showPanelMessage(error.message);
-            });
+                showPanelMessage("JSON importato");
+            } catch (error) {
+                showPanelMessage("File JSON non valido");
+            }
+            uploadJsonInput.value = "";
+        };
+        reader.readAsText(file);
     });
 
     tableBody.addEventListener("click", function (event) {
-        var target = event.target;
-        var button = target.closest("button");
+        var button = event.target.closest("button");
         if (!button) {
             return;
         }
@@ -347,25 +278,11 @@
                 return;
             }
 
-            if (useLocalMode) {
-                events = events.filter(function (item) {
-                    return item.id !== deleteId;
-                });
-                saveLocalEvents();
-                renderEvents();
-                showPanelMessage("Evento eliminato (locale)");
-                return;
-            }
-
-            apiCall({ action: "delete", id: deleteId, password: password })
-                .then(function (payload) {
-                    events = payload.events || [];
-                    renderEvents();
-                    showPanelMessage("Evento eliminato");
-                })
-                .catch(function (error) {
-                    showPanelMessage(error.message);
-                });
+            events = events.filter(function (item) {
+                return item.id !== deleteId;
+            });
+            renderEvents();
+            showPanelMessage("Evento eliminato");
             return;
         }
 
@@ -379,8 +296,5 @@
         }
     });
 
-    var remembered = sessionStorage.getItem("events_admin_password") || "";
-    if (remembered === HARDCODED_PASSWORD) {
-        setAuthenticated(remembered);
-    }
+    loadInitialEvents();
 })();
