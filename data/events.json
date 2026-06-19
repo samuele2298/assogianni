@@ -13,10 +13,16 @@
             "datetime": "Sabato 04/07/2026 ore 20:00"
         },
         {
-            "id": "evt-3",
+            "id": "evt-1781878055941",
             "title": "Dragonstock",
             "location": "Dragoncello - Campo Sportivo",
-            "datetime": "Sabato 11/07/2026 ore 19:30"
+            "datetime": "Dal 9/7 al 12/7 tutte le sere dalle 20:00"
+        },
+        {
+            "id": "evt-1781878131782",
+            "title": "Fiera Quistello",
+            "location": "Quistello",
+            "datetime": "21/08 - 25/08 dalle 20:00"
         }
     ]
 }
