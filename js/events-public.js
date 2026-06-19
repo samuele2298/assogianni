@@ -17,23 +17,6 @@
             .replace(/'/g, "&#039;");
     }
 
-    function formatItDateTime(isoString) {
-        var date = new Date(isoString);
-
-        if (Number.isNaN(date.getTime())) {
-            return "Data non valida";
-        }
-
-        return new Intl.DateTimeFormat("it-IT", {
-            weekday: "long",
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
-        }).format(date);
-    }
-
     function render(events) {
         listEl.innerHTML = "";
 
@@ -50,7 +33,7 @@
 
             col.innerHTML = ""
                 + "<article class=\"event-card\">"
-                + "<p class=\"event-date\"><i class=\"far fa-calendar-alt me-2\"></i>" + escapeHtml(formatItDateTime(eventItem.datetime)) + "</p>"
+                + "<p class=\"event-date\"><i class=\"far fa-calendar-alt me-2\"></i>" + escapeHtml(eventItem.datetime || "Data da definire") + "</p>"
                 + "<h4 class=\"event-title\">" + escapeHtml(eventItem.title || "Evento") + "</h4>"
                 + "<p class=\"event-location\"><i class=\"fas fa-map-marker-alt me-2\" style=\"color: #E97451;\"></i>" + escapeHtml(eventItem.location || "Luogo da definire") + "</p>"
                 + "</article>";

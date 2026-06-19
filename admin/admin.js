@@ -25,34 +25,6 @@
         }, 2500);
     }
 
-    function isoToInputValue(isoString) {
-        var date = new Date(isoString);
-        if (Number.isNaN(date.getTime())) {
-            return "";
-        }
-
-        var pad = function (num) {
-            return String(num).padStart(2, "0");
-        };
-
-        return date.getFullYear() + "-" + pad(date.getMonth() + 1) + "-" + pad(date.getDate()) + "T" + pad(date.getHours()) + ":" + pad(date.getMinutes());
-    }
-
-    function formatItDateTime(isoString) {
-        var date = new Date(isoString);
-        if (Number.isNaN(date.getTime())) {
-            return "Data non valida";
-        }
-
-        return new Intl.DateTimeFormat("it-IT", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit"
-        }).format(date);
-    }
-
     function resetForm() {
         eventIdInput.value = "";
         eventTitleInput.value = "";
@@ -86,7 +58,7 @@
             locationCell.textContent = eventItem.location;
 
             var datetimeCell = document.createElement("td");
-            datetimeCell.textContent = formatItDateTime(eventItem.datetime);
+            datetimeCell.textContent = eventItem.datetime;
 
             var actionsCell = document.createElement("td");
             actionsCell.className = "text-end";
@@ -146,7 +118,7 @@
                     id: String(item.id || ("evt-" + Date.now() + "-" + Math.random().toString(16).slice(2))),
                     title: String(item.title || "").trim(),
                     location: String(item.location || "").trim(),
-                    datetime: String(item.datetime || "")
+                    datetime: String(item.datetime || "").trim()
                 };
             })
             .filter(function (item) {
@@ -184,10 +156,9 @@
         var id = eventIdInput.value;
         var title = eventTitleInput.value.trim();
         var location = eventLocationInput.value.trim();
-        var datetimeRaw = eventDatetimeInput.value;
-        var normalizedDatetime = new Date(datetimeRaw).toISOString();
+        var datetimeText = eventDatetimeInput.value.trim();
 
-        if (!title || !location || !datetimeRaw || Number.isNaN(new Date(datetimeRaw).getTime())) {
+        if (!title || !location || !datetimeText) {
             showPanelMessage("Compila correttamente titolo, luogo e data/ora");
             return;
         }
@@ -202,7 +173,7 @@
                     id: item.id,
                     title: title,
                     location: location,
-                    datetime: normalizedDatetime
+                    datetime: datetimeText
                 };
             });
             showPanelMessage("Evento aggiornato");
@@ -211,7 +182,7 @@
                 id: "evt-" + Date.now(),
                 title: title,
                 location: location,
-                datetime: normalizedDatetime
+                datetime: datetimeText
             });
             showPanelMessage("Evento aggiunto");
         }
@@ -273,7 +244,7 @@
             eventIdInput.value = row.id;
             eventTitleInput.value = row.title;
             eventLocationInput.value = row.location;
-            eventDatetimeInput.value = isoToInputValue(row.datetime);
+            eventDatetimeInput.value = row.datetime;
             saveBtn.textContent = "Salva modifica";
             cancelEditBtn.classList.remove("d-none");
             window.scrollTo({ top: 0, behavior: "smooth" });
