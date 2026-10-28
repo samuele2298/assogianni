@@ -1,22 +1,10 @@
 {
     "events": [
         {
-            "id": "evt-1782648031857",
-            "title": "Notte bianca",
-            "location": "Poggio rusco",
-            "datetime": "4/07/26 ore 20:00"
-        },
-        {
-            "id": "evt-1781878055941",
-            "title": "Dragonstock",
-            "location": "Dragoncello - Campo Sportivo",
-            "datetime": "Dal 9/7 al 12/7 tutte le sere dalle 20:00"
-        },
-        {
-            "id": "evt-1781878131782",
-            "title": "Fiera Quistello",
-            "location": "Quistello",
-            "datetime": "21/08 - 25/08 dalle 20:00"
+            "id": "evt-1792745352185",
+            "title": "Chinaski",
+            "location": "Sermide",
+            "datetime": "Martedì 8/12/26 dalle 19 in poi"
         }
     ]
 }
